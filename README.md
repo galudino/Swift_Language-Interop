@@ -158,19 +158,20 @@ In this `.mm` file, we are able to use C++ code/libraries.
 We `#include "cpp_stack_int.hpp"`, in addition to `#import "objcpp_stack_int.h"`.
 (`#include` is used for C and C++ headers, `#import` is used for Objective-C headers)
 
-`stack` is our C++ class, `_impl` is a field within a class extension for StackInt.
+`stack` (in `namespace cpp`) is our C++ class, `_impl` is a field within a class extension for StackInt.
 This class extension (and any fields/properties/methods within it) will not be accessible
 in the public interface -- our `_impl` field is effectively 'private'.
 
-We use the `_impl` field to invoke `stack`'s member functions.
+We use the `_impl` field to invoke `cpp::stack`'s member functions.
 
 ```objc
 #import "objcpp_stack_int.h"
+#import <Foundation/Foundation.h>
 
 #include "cpp_stack_int.hpp"
 
 @interface StackInt() {
-    stack _impl;
+    cpp::stack _impl;
 }
 @end
 
@@ -178,7 +179,7 @@ We use the `_impl` field to invoke `stack`'s member functions.
 
 - (id)init:(size_t)capacity {
     if (self == [super init]) {
-        auto s = stack(capacity);
+        auto s = cpp::stack(capacity);
         _impl = std::move(s);
     }
     
@@ -210,7 +211,6 @@ We use the `_impl` field to invoke `stack`'s member functions.
 }
 
 @end
-
 ```
 
 Our C++ header file, `cpp_stack_int.hpp`, is vanilla C++:
@@ -221,7 +221,11 @@ Our C++ header file, `cpp_stack_int.hpp`, is vanilla C++:
 
 #include <cstddef>
 
-class stack {
+namespace cpp {
+class stack;
+}
+
+class cpp::stack {
 public:
     stack() = default;
     
@@ -268,7 +272,6 @@ private:
     int *m_end_of_storage;
 };
 
-
 #endif /* CPP_STACK_INT_HPP */
 ```
 
@@ -280,6 +283,8 @@ Same with our `cpp_stack_int.cpp` source file:
 #include <memory>
 #include <algorithm>
 #include <iostream>
+
+using cpp::stack;
 
 stack::stack(size_t capacity) {
     auto *start = new int[capacity];
