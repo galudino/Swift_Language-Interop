@@ -48,7 +48,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A61C81D7264C9D86001F0015 /* Old Java Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Old Java Sources"; sourceTree = "<group>"; };
 		A61C81EB264CA6CC001F0015 /* StackTest-C */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "StackTest-C"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61C81ED264CA6CC001F0015 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A61C81F2264CA703001F0015 /* StackTest-C-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StackTest-C-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				A6EC44EC264D035C00421A66 /* README.md */,
-				A61C81D7264C9D86001F0015 /* Old Java Sources */,
 				A61C81EC264CA6CC001F0015 /* StackTest-C */,
 				A61C81FB264CA7C4001F0015 /* StackTest-ObjC */,
 				A61C820A264CC086001F0015 /* StackTest-ObjCPP */,
