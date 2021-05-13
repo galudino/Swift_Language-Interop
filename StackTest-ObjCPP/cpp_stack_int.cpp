@@ -31,9 +31,8 @@ stack::stack(const stack &s) {
 
 stack::stack(stack &&s) :
     m_start(std::exchange(s.m_start, nullptr)),
-    m_finish(m_start + s.size()),
-    m_end_of_storage(m_start + s.capacity()) {
-
+    m_finish(std::exchange(s.m_finish, nullptr)),
+    m_end_of_storage(std::exchange(s.m_end_of_storage, nullptr)) {
 }
 
 void stack::push(int val) {
