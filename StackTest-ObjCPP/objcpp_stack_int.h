@@ -12,8 +12,8 @@
 
 @interface StackInt : NSObject
 
-- (id)init:(size_t)capacity;
-- (id)deinit;
+- (instancetype)init:(size_t)capacity;
+- (instancetype)deinit;
 
 - (void)push:(int)val;
 - (void)pop;

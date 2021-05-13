@@ -22,7 +22,7 @@
 
 @implementation StackInt
 
-- (id)init:(size_t)capacity {
+- (instancetype)init:(size_t)capacity {
     if (self == [super init]) {
         int *start = calloc(capacity, sizeof *start);
         assert(start);
@@ -34,7 +34,7 @@
     return self;
 }
 
-- (id)deinit {
+- (instancetype)deinit {
     free(m_start);
     m_start = m_finish = m_end_of_storage = (int *)(0);
     

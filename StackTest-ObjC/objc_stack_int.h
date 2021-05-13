@@ -17,8 +17,8 @@
     int *m_end_of_storage;
 }
 
-- (id)init:(size_t)capacity;
-- (id)deinit;
+- (instancetype)init:(size_t)capacity;
+- (instancetype)deinit;
 
 - (void)push:(int)val;
 - (void)pop;

@@ -17,7 +17,7 @@
 
 @implementation StackInt
 
-- (id)init:(size_t)capacity {
+- (instancetype)init:(size_t)capacity {
     if (self == [super init]) {
         auto s = cpp::stack(capacity);
         _impl = std::move(s);
@@ -26,7 +26,7 @@
     return self;
 }
 
-- (id)deinit {
+- (instancetype)deinit {
     return self;
 }
 
