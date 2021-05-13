@@ -4,6 +4,22 @@ This Xcode project demonstrates how to call C, Objective-C, and Objective-C++ co
 
 Tested on macOS Big Sur 11.3.1 with Xcode 12.5.
 
+# Table of contents
+- [Swift Language Interoperability Tests](#swift-language-interoperability-tests)
+- [Table of contents](#table-of-contents)
+  * [Targets](#targets)
+  * [Main points](#main-points)
+    + [The bridging header file](#the-bridging-header-file)
+      - [Creating the bridging header yourself](#creating-the-bridging-header-yourself)
+      - [Configuring your Xcode project](#configuring-your-xcode-project)
+    + [Language compatibility](#language-compatibility)
+      - [C and Objective-C](#c-and-objective-c)
+      - [Cpp](#cpp)
+  * [Usage of bridged code](#usage-of-bridged-code)
+    + [C](#c)
+    + [Objective-C](#objective-c)
+    + [Objective-Cpp](#objective-cpp)
+
 ## Targets
 
 We have three (3) separate examples/targets -- 
@@ -23,11 +39,11 @@ that demonstrates the usage of a stack data structure of `int` (`StackInt`)
   invocation of Objective-C++ code from within Swift.
 
 Each `main.swift` does the following:
-    - Creates and initializes a `StackInt` s of size 1
-    - Push elements [10, 9, 8, ... 1] to s
-    - While the stack isn't empty, peek/print the stack top, then pop s.
+- Creates and initializes a `StackInt` s of size 1
+- Push elements [10, 9, 8, ... 1] to s
+- While the stack isn't empty, peek/print the stack top, then pop s.
 
-## Main points:
+## Main points
 
 ### The bridging header file
 
@@ -59,7 +75,7 @@ The contents of `StackTest-C-Bridging-Header.h`, should contain the following:
 
 Any other headers you would like to use in your Swift project should be `#import`ed here as well.
 
-#### Configuring your Xcode project to use the bridging header you created
+#### Configuring your Xcode project
 On the left hand side of your Xcode window, left-click the project icon. (The blue Xcode project icon).
 Then, to the center-left of the screen, under 'TARGETS', choose the desired target.
 
@@ -70,13 +86,17 @@ Type the relative path of your bridging header in the box. For this project/targ
 `StackTest-C/StackTest-C-Bridging-Header.h`.
 
 ### Language compatibility
-#### C code and Objective-C classes can be called directly from within Swift
+#### C and Objective-C
+
+C code and Objective-C classes can be called directly from within Swift.
 
 Once you have configured a bridging header for your Xcode project,
 and the bridging header `#import`s your API's header file,
 you are now able to call your C/Objective-C code from within Swift.
 
-#### C++ classes must be wrapped inside an Objective-C class
+#### Cpp
+
+C++ classes must be wrapped inside an Objective-C class.
 
 Source code using both the C++ and Objective-C languages must be stored in a (`.mm`) file.
 This denotes that the source is Objective-C++.
@@ -138,8 +158,11 @@ In this `.mm` file, we are able to use C++ code/libraries.
 We `#include "cpp_stack_int.hpp"`, in addition to `#import "objcpp_stack_int.h"`.
 (`#include` is used for C and C++ headers, `#import` is used for Objective-C headers)
 
-Also notice: we have a 'private' `stack` member in `StackInt`.
-`stack` is our C++ class.
+`stack` is our C++ class, `_impl` is a field within a class extension for StackInt.
+This class extension (and any fields/properties/methods within it) will not be accessible
+in the public interface -- our `_impl` field is effectively 'private'.
+
+We use the `_impl` field to invoke `stack`'s member functions.
 
 ```objc
 #import "objcpp_stack_int.h"
@@ -341,9 +364,9 @@ void stack::resize(size_t old_capacity, size_t new_capacity) {
 }
 ```
 
-## Usage of bridged code (`main.swift` samples):
+## Usage of bridged code
 
-### C:
+### C
 ```swift
 func useCStack() {
     // Declare a StackInt
@@ -370,7 +393,7 @@ func useCStack() {
 useCStack()
 ```
 
-### Objective-C:
+### Objective-C
 ```swift
 func useObjCStack() {
     // Declare a StackInt
@@ -395,7 +418,7 @@ func useObjCStack() {
 useObjCStack()
 ```
 
-### Objective-C++:
+### Objective-Cpp
 ```swift
 func useObjCPPStack() {
     // Declare a StackInt
