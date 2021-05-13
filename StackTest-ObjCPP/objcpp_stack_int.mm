@@ -11,7 +11,7 @@
 #include "cpp_stack_int.hpp"
 
 @interface StackInt() {
-    stack _impl;
+    cpp::stack _impl;
 }
 @end
 
@@ -19,10 +19,8 @@
 
 - (id)init:(size_t)capacity {
     if (self == [super init]) {
-        
-        auto s = stack(capacity);
+        auto s = cpp::stack(capacity);
         _impl = std::move(s);
-        
     }
     
     return self;
