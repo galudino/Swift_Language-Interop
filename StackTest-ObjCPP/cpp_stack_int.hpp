@@ -10,7 +10,11 @@
 
 #include <cstddef>
 
-class stack {
+namespace cpp {
+class stack;
+}
+
+class cpp::stack {
 public:
     stack() = default;
     
@@ -56,6 +60,5 @@ private:
     int *m_finish;
     int *m_end_of_storage;
 };
-
 
 #endif /* CPP_STACK_INT_HPP */

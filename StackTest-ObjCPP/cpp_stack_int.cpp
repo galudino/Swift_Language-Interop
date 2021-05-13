@@ -11,8 +11,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include <cstdlib>
-#include <cstring>
+using cpp::stack;
 
 stack::stack(size_t capacity) {
     auto *start = new int[capacity];
