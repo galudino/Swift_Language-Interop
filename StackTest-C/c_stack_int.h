@@ -20,6 +20,8 @@ struct stack {
 };
 
 void StackInt_init(StackInt *const self, size_t capacity);
+void StackInt_initCopy(StackInt *const self, const StackInt *const s);
+void StackInt_initMove(StackInt *const self, StackInt *const s);
 void StackInt_deinit(StackInt *const self);
 
 void StackInt_push(StackInt *const self, int val);
@@ -39,5 +41,8 @@ static inline bool StackInt_empty(const StackInt *const self) {
 }
 
 void StackInt_clear(StackInt *const self);
+
+StackInt *StackInt_assignCopy(StackInt *const self, const StackInt *const s);
+StackInt *StackInt_assignMove(StackInt *const self, StackInt *const s);
 
 #endif /* C_STACK_INT_H */
