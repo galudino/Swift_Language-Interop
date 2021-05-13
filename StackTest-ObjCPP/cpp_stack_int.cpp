@@ -25,8 +25,8 @@ stack::stack(const stack &s) {
     
     std::copy(s.m_start, s.m_finish, start);
     
-    m_finish = m_start + s.size();
-    m_end_of_storage = m_start + s.capacity();
+    m_finish = start + s.size();
+    m_end_of_storage = start + s.capacity();
 }
 
 stack::stack(stack &&s) :
@@ -84,12 +84,12 @@ void stack::resize(size_t old_capacity, size_t new_capacity) {
         std::copy(m_start, m_finish, new_start);
         
         m_start = new_start;
-        m_finish = m_start + old_capacity;
-        m_end_of_storage = m_start + new_capacity;
+        m_finish = new_start + old_capacity;
+        m_end_of_storage = new_start + new_capacity;
     } else {
         std::copy(m_start, m_start + new_capacity, new_start);
         
         m_start = new_start;
-        m_finish = m_end_of_storage = m_start + new_capacity;
+        m_finish = m_end_of_storage = new_start + new_capacity;
     }
 }
