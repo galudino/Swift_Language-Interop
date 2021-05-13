@@ -34,6 +34,16 @@
     return self;
 }
 
+- (instancetype)initCopy:(const StackInt *const)s {
+    
+    return self;
+}
+
+- (instancetype)initMove:(StackInt *const)s {
+    
+    return self;
+}
+
 - (instancetype)deinit {
     free(m_start);
     m_start = m_finish = m_end_of_storage = (int *)(0);
@@ -66,6 +76,14 @@
 - (void)clear {
     memset(m_start, 0, self.capacity);
     m_finish = m_start;
+}
+
+- (instancetype)assignCopy:(const StackInt *const)s {
+    return self;
+}
+
+- (instancetype)assignMove:(StackInt *const)s {
+    return self;
 }
 
 - (size_t)capacity {

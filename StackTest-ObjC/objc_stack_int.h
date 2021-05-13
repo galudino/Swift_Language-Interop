@@ -18,6 +18,8 @@
 }
 
 - (instancetype)init:(size_t)capacity;
+- (instancetype)initCopy:(const StackInt *const)s;
+- (instancetype)initMove:(StackInt *const)s;
 - (instancetype)deinit;
 
 - (void)push:(int)val;
@@ -27,6 +29,9 @@
 - (BOOL)empty;
 
 - (void)clear;
+
+- (instancetype)assignCopy:(const StackInt *const)s;
+- (instancetype)assignMove:(StackInt *const)s;
 
 @end
 
