@@ -5,8 +5,6 @@ This Xcode project demonstrates how to call C, Objective-C, and Objective-C++ co
 Tested on macOS Big Sur 11.3.1 with Xcode 12.5.
 
 # Table of contents
-- [Swift Language Interoperability Tests](#swift-language-interoperability-tests)
-- [Table of contents](#table-of-contents)
   * [Targets](#targets)
   * [Main points](#main-points)
     + [The bridging header file](#the-bridging-header-file)
