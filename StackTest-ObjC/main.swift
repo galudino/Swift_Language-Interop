@@ -17,8 +17,8 @@ func useObjCStack() {
     
     // For all stack members,
     // peek the stack top, print the element, then pop it off
-    while !s.empty() {
-        let n = s.top()
+    while !s.empty {
+        let n = s.top
         print("[useObjCStack] StackInt just popped: \(n)")
         
         s.pop()

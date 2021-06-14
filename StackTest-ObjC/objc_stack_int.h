@@ -11,27 +11,28 @@
 #include <stdint.h>
 #import <Foundation/Foundation.h>
 
-@interface StackInt : NSObject {
-    int *m_start;
-    int *m_finish;
-    int *m_end_of_storage;
-}
+@interface StackInt : NSObject
 
+- (instancetype)init;
 - (instancetype)init:(size_t)capacity;
 - (instancetype)initCopy:(const StackInt *const)s;
 - (instancetype)initMove:(StackInt *const)s;
 - (instancetype)deinit;
 
+- (instancetype)assignCopy:(const StackInt *const)s;
+- (instancetype)assignMove:(StackInt *const)s;
+
+@property (readonly) int top;
+@property (readonly) BOOL empty;
+
+@end
+
+@interface StackInt (StackOperations)
+
 - (void)push:(int)val;
 - (void)pop;
 
-- (int)top;
-- (BOOL)empty;
-
 - (void)clear;
-
-- (instancetype)assignCopy:(const StackInt *const)s;
-- (instancetype)assignMove:(StackInt *const)s;
 
 @end
 

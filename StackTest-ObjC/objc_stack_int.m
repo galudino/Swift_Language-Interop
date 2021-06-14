@@ -8,10 +8,11 @@
 #include <stdint.h>
 
 #import "objc_stack_int.h"
-
 #import <Foundation/Foundation.h>
 
-@interface StackInt()
+#define StackInt_DEFAULT_CAPACITY 2
+
+@interface StackInt (PrivateFunctionality)
 
 @property (readonly) size_t capacity;
 @property (readonly) size_t size;
@@ -20,7 +21,23 @@
 
 @end
 
-@implementation StackInt
+@implementation StackInt {
+    int *m_start;
+    int *m_finish;
+    int *m_end_of_storage;
+}
+
+- (instancetype)init {
+    if (self == [super init]) {
+        int *start = calloc(StackInt_DEFAULT_CAPACITY, sizeof *start);
+        assert(start);
+        
+        m_start = m_finish = start;
+        m_end_of_storage = start + StackInt_DEFAULT_CAPACITY;
+    }
+    
+    return self;
+}
 
 - (instancetype)init:(size_t)capacity {
     if (self == [super init]) {
@@ -35,11 +52,28 @@
 }
 
 - (instancetype)initCopy:(const StackInt *const)s {
+    if (self == [super init]) {
+        int *start = calloc(s.capacity, sizeof *s->m_start);
+        assert(start);
+        
+        memcpy(start, s->m_start, sizeof *s->m_start * s.size);
+        
+        m_start = start;
+        m_finish = start + s.size;
+        m_end_of_storage = start + s.capacity;
+    }
     
     return self;
 }
 
 - (instancetype)initMove:(StackInt *const)s {
+    if (self == [super init]) {
+        self->m_start = s->m_start;
+        self->m_finish = s->m_finish;
+        self->m_end_of_storage = s->m_end_of_storage;
+        
+        s->m_start = s->m_finish = s->m_end_of_storage = (int *)(0);
+    }
     
     return self;
 }
@@ -50,6 +84,44 @@
     
     return self;
 }
+
+- (instancetype)assignCopy:(const StackInt *const)s {
+    if (s != nil) {
+        int *start = calloc(s.capacity, sizeof *s->m_start);
+        assert(start);
+        
+        memcpy(start, s->m_start, sizeof *s->m_start * s.size);
+        
+        m_start = start;
+        m_finish = start + s.size;
+        m_end_of_storage = start + s.capacity;
+    }
+    
+    return self;
+}
+
+- (instancetype)assignMove:(StackInt *const)s {
+    if (s != nil) {
+        m_start = s->m_start;
+        m_finish = s->m_finish;
+        m_end_of_storage = s->m_end_of_storage;
+        
+        s->m_start = s->m_finish = s->m_end_of_storage = (int *)(0);
+    }
+    return self;
+}
+
+- (int)top {
+    return *(m_finish - 1);
+}
+
+- (BOOL)empty {
+    return m_finish == m_start;
+}
+
+@end
+
+@implementation StackInt (StackOperations)
 
 - (void)push:(int)val {
     if (self.size == self.capacity) {
@@ -65,26 +137,14 @@
     }
 }
 
-- (int)top {
-    return *(m_finish - 1);
-}
-
-- (BOOL)empty {
-    return m_finish == m_start;
-}
-
 - (void)clear {
     memset(m_start, 0, self.capacity);
     m_finish = m_start;
 }
 
-- (instancetype)assignCopy:(const StackInt *const)s {
-    return self;
-}
+@end
 
-- (instancetype)assignMove:(StackInt *const)s {
-    return self;
-}
+@implementation StackInt (PrivateFunctionality)
 
 - (size_t)capacity {
     return m_end_of_storage - m_start;
@@ -103,7 +163,7 @@
     
     m_start = new_start;
     m_finish = oldCapacity < newCapacity ? new_start + oldCapacity : new_start + newCapacity;
-    m_finish = new_start + newCapacity;
+    m_end_of_storage = new_start + newCapacity;
 }
 
 @end
