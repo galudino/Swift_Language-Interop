@@ -19,6 +19,7 @@ struct stack {
     int *m_end_of_storage;
 };
 
+void StackInt_initDefault(StackInt *const self);
 void StackInt_init(StackInt *const self, size_t capacity);
 void StackInt_initCopy(StackInt *const self, const StackInt *const s);
 void StackInt_initMove(StackInt *const self, StackInt *const s);

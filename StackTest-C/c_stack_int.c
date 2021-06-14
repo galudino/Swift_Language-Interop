@@ -13,7 +13,7 @@
 #include <string.h>
 #include <assert.h>
 
-#define StackInt_DEFAULT_CAPACITY 16
+#define StackInt_DEFAULT_CAPACITY 2
 
 static inline size_t StackInt_capacity(const StackInt *const self) {
     return self->m_end_of_storage - self->m_start;
@@ -24,6 +24,10 @@ static inline size_t StackInt_size(const StackInt *const self) {
 }
 
 static void StackInt_resize(StackInt *const self, size_t old_capacity, size_t new_capacity);
+
+void StackInt_initDefault(StackInt *const self) {
+    StackInt_init(self, StackInt_DEFAULT_CAPACITY);
+}
 
 void StackInt_init(StackInt *const self, size_t capacity) {
     int *start = calloc(capacity, sizeof *start);
