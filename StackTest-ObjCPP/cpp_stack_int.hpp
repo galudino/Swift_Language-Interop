@@ -16,7 +16,9 @@ class stack;
 
 class cpp::stack {
 public:
-    stack() = default;
+    static constexpr auto DEFAULT_CAPACITY = 2;
+    
+    stack();
     
     stack(size_t capacity);
     
@@ -44,8 +46,6 @@ public:
     stack &operator=(const stack &s);
     stack &operator=(stack &&s);
 private:
-    static constexpr auto DEFAULT_CAPACITY = 16;
-    
     size_t capacity() const {
         return m_end_of_storage - m_start;
     }

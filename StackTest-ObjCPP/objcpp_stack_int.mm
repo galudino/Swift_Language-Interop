@@ -10,32 +10,40 @@
 
 #include "cpp_stack_int.hpp"
 
-@interface StackInt() {
+@implementation StackInt {
     cpp::stack _impl;
 }
-@end
 
-@implementation StackInt
+- (instancetype)init {
+    if (self == [super init]) {
+
+    }
+
+    return self;
+}
 
 - (instancetype)init:(size_t)capacity {
     if (self == [super init]) {
-        auto s = cpp::stack(capacity);
-        _impl = std::move(s);
+        _impl = cpp::stack(capacity);
     }
     
     return self;
 }
 
-- (instancetype)deinit {
+- (instancetype)initCopy:(StackInt *)s {
+    if (self == [super init]) {
+        _impl = cpp::stack(s->_impl);
+    }
+    
     return self;
 }
 
-- (void)push:(int)val {
-    _impl.push(val);
-}
-
-- (void)pop {
-    _impl.pop();
+- (instancetype)initMove:(StackInt *)s {
+    if (self == [super init]) {
+        _impl = cpp::stack(std::move(s->_impl));
+    }
+    
+    return self;
 }
 
 - (int)top {
@@ -44,6 +52,19 @@
 
 - (BOOL)empty {
     return _impl.empty();
+}
+
+@end
+
+
+@implementation StackInt (StackOperations)
+
+- (void)push:(int)val {
+    _impl.push(val);
+}
+
+- (void)pop {
+    _impl.pop();
 }
 
 - (void)clear {

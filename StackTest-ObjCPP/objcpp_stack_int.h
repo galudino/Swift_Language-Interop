@@ -12,14 +12,20 @@
 
 @interface StackInt : NSObject
 
+- (instancetype)init;
 - (instancetype)init:(size_t)capacity;
-- (instancetype)deinit;
+- (instancetype)initCopy:(StackInt *)s;
+- (instancetype)initMove:(StackInt *)s;
+
+@property (readonly) int top;
+@property (readonly) BOOL empty;
+
+@end
+
+@interface StackInt (StackOperations)
 
 - (void)push:(int)val;
 - (void)pop;
-
-- (int)top;
-- (BOOL)empty;
 
 - (void)clear;
 

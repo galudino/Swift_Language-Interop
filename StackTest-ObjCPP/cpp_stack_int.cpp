@@ -13,7 +13,13 @@
 
 using cpp::stack;
 
+stack::stack() : stack(stack::DEFAULT_CAPACITY) {
+
+}
+
 stack::stack(size_t capacity) {
+    if (capacity == 0) { return; }
+    
     auto *start = new int[capacity];
     
     m_start = m_finish = start;
